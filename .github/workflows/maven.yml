@@ -5,9 +5,11 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - *
 
 jobs:
   build:
@@ -21,5 +23,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - name: Test with Maven
+      run: mvn -B clean test
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B clean package -DskipTests
