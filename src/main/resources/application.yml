@@ -1,1 +1,5 @@
-
+app:
+  bots:
+    telegram:
+      bot-user-name: 'telegram'
+      bot-token: 'token'
