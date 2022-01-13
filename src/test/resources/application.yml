@@ -6,7 +6,3 @@ app:
     telegram:
       username: 'telegram'
       token: 'token'
-
-logging:
-  level:
-    org.mongodb: TRACE
