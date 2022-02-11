@@ -1,10 +1,8 @@
 package ru.diprogram.services.telegram;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -17,7 +15,7 @@ import ru.diprogram.services.BotService;
 
 @Slf4j
 @Service
-public class BotServiceTelegram extends TelegramLongPollingBot implements BotService, BeanPostProcessor {
+public class BotServiceTelegram extends TelegramLongPollingBot implements BotService, InitializingBean {
     private final TelegramBotsApi telegramBotsApi;
     private final String botToken;
     private final String botUsername;
@@ -76,12 +74,7 @@ public class BotServiceTelegram extends TelegramLongPollingBot implements BotSer
     }
 
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        try {
-            telegramBotsApi.registerBot(this);
-        } catch (TelegramApiException e) {
-            throw new BeanCreationException("Error register bot [" + beanName + "]", e);
-        }
-        return bean;
+    public void afterPropertiesSet() throws Exception {
+        telegramBotsApi.registerBot(this);
     }
 }

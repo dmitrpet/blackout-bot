@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.2</version>
+		<version>2.6.0</version>
 		<relativePath/>
 	</parent>
 
@@ -73,6 +73,33 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.15.0</version>
+				<configuration>
+					<sourceEncoding>utf-8</sourceEncoding>
+					<failOnViolation>true</failOnViolation>
+					<failurePriority>4</failurePriority>
+				</configuration>
+				<executions>
+					<execution>
+						<id>pmd-check</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>cpd-check</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>cpd-check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
