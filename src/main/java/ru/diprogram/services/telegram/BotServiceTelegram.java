@@ -12,6 +12,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.diprogram.model.BotChannel;
 import ru.diprogram.model.BotMessage;
 import ru.diprogram.services.BotService;
+import ru.diprogram.services.exceptions.IncompatibleSourceMessage;
 
 @Slf4j
 @Service
@@ -48,8 +49,13 @@ public class BotServiceTelegram extends TelegramLongPollingBot implements BotSer
     }
 
     @Override
-    public BotMessage receiveMessage(Object sourceMessage) {
-        Update update = (Update) sourceMessage;
+    public BotMessage receiveMessage(Object sourceMessage) throws IncompatibleSourceMessage {
+        if (!(sourceMessage instanceof Update update)) {
+            throw new IncompatibleSourceMessage("Expected " +
+                    Update.class.getName() +
+                    " but was " +
+                    sourceMessage.getClass().getName());
+        }
         return () -> {
             if (update.hasMessage() && update.getMessage().hasText()) {
                 return update.getMessage().getText();
